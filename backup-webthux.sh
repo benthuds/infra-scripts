@@ -1,18 +1,17 @@
 #!/usr/bin/env zsh
 #
-# listaUsuarios.sh - Extrai usuários do /etc/passwd
+# backup-webthux.sh - backup dos arquivos de configuração de um servidor Web.
 #
 # Site:       https://thux.tech/hudson
 # Autor:      Hudson Bento
 # Manutenção: Hudson Bento
 #
 # ------------------------------------------------------------------------ #
-#  Este código tem como finalidade inserir dados na tabelas de imagens do banco de daddos do Wordpress
+#  Este código tem como finalidade realizar o backup dos arquivos de configuração de vários sites hospedados em um servidor Web.
 #
 #  Exemplos:
 # ------------------------------------------------------------------------ #
 # Histórico:
-#
 #   v1.0/11/2024, Hudson:
 #     -
 # ------------------------------------------------------------------------ #
