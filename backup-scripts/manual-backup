@@ -29,6 +29,7 @@ OST_BACKUP="$(date +%Y"-"%m"-"%d)_osTicket_db.sql"
 BD_USER="root"
 DB_PASSWD="tJ#@9#k3V3$"
 DB_NAME="thux_db"
+CON_DB"$(mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME")"
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- TESTES ----------------------------------------- #
@@ -74,15 +75,15 @@ case "$ESCOLHA" in
         case "$BANCO" in
              A | a)
                 echo "DB Citrino será feito backup!"
-                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$CTR_BACKUP
+                #$CON_DB > /mnt/backup/$CTR_BACKUP
                 ;;
             B | b)
                 echo "DB Thux será feito backup!"
-                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$THUX_BACKUP
+                #$CON_DB > /mnt/backup/$THUX_BACKUP
                 ;;
             C | c)
                 echo "DB osTicket será feito backup!"
-                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$osT_backup
+                #$CON_DB > /mnt/backup/$osT_backup
                 ;;
         esac
         ;;
