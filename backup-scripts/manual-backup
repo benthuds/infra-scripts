@@ -26,9 +26,9 @@ KEYS="$(date +%Y"-"%m"-"%d)_ssl-keys.bz2.tar"
 CTR_BACKUP="$(date +%Y"-"%m"-"%d)_dbcitrino.sql"
 THUX_BACKUP="$(date +%Y"-"%m"-"%d)_thux_db.sql"
 OST_BACKUP="$(date +%Y"-"%m"-"%d)_osTicket_db.sql"
-BD_USER="root"
-DB_PASSWD="tJ#@9#k3V3$"
-DB_NAME="thux_db"
+BD_USER="user"
+DB_PASSWD="senh@"
+DB_NAME="database"
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- TESTES ----------------------------------------- #
