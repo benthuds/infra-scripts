@@ -1,0 +1,96 @@
+#!/bin/zsh
+#
+# backup-webthux.sh - backup dos arquivos de configuração de um servidor Web.
+#
+# Site:       https://thux.tech/hudson
+# Autor:      Hudson Bento
+# Manutenção: Hudson Bento
+#
+# ------------------------------------------------------------------------ #
+#  Este código tem como finalidade realizar o backup dos arquivos de configuração de vários sites hospedados em um servidor Web.
+#
+#  Exemplos:
+# ------------------------------------------------------------------------ #
+# Histórico:
+#   v1.0/11/2024, Hudson:
+#     -
+# ------------------------------------------------------------------------ #
+# Testado em:
+#   zsh 5.8.1
+# ------------------------------------------------------------------------ #
+
+# ------------------------------- VARIÁVEIS ----------------------------------------- #
+HTML="$(date +%Y"-"%m"-"%d)_html.bz2.tar"
+SITES="$(date +%Y"-"%m"-"%d)_sites-conf.bz2.tar"
+KEYS="$(date +%Y"-"%m"-"%d)_ssl-keys.bz2.tar"
+CTR_BACKUP="$(date +%Y"-"%m"-"%d)_dbcitrino.sql"
+THUX_BACKUP="$(date +%Y"-"%m"-"%d)_thux_db.sql"
+OST_BACKUP="$(date +%Y"-"%m"-"%d)_osTicket_db.sql"
+BD_USER="root"
+DB_PASSWD="tJ#@9#k3V3$"
+DB_NAME="thux_db"
+# ------------------------------------------------------------------------ #
+
+# ------------------------------- TESTES ----------------------------------------- #
+
+# ------------------------------------------------------------------------ #
+
+# ------------------------------- FUNÇÕES ----------------------------------------- #
+
+# ------------------------------------------------------------------------ #
+
+# ------------------------------- EXECUÇÃO ----------------------------------------- #
+printf "Escolha uma das opções de backup, abaixo: \n
+    01 - Backup dos conteúdos HTML; \n
+    02 - Backup das configurações dos Sites; \n
+    03 - Backup das Chaves SSL; \n
+    04 - Backup dos Banco de Dados dos Sites \n
+    05 - Sair \n"
+
+read ESCOLHA
+
+case "$ESCOLHA" in
+    01 | 1)
+        echo "backup conteúdo HTML!" 
+        /home/huds_on/Documents/thux/git/infra-scripts/placebo.sh
+        #tar cjfv /mnt/backup/$HTML /usr/share/nginx/html/
+        ;;
+    02 | 2 )
+        echo "backup conf sites!"
+        #tar cjfv /mnt/backup/$SITES /etc/nginx/sites-available/
+        ;;
+    03 | 3 )
+        echo "backup chaves ssl!"
+        #tar cjfv /mnt/backup/$KEYS /etc/ssl
+        ;;
+    04 | 4 )
+        echo "backup databases!"
+        printf "Escolha qual Database deseja executar o Backup: \n
+            A - Site Citrino; \n
+            B - Site Thux; \n
+            C - osTicket. \n"
+        
+        read BANCO
+        case "$BANCO" in
+             A | a)
+                echo "DB Citrino será feito backup!"
+                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$CTR_BACKUP
+                ;;
+            B | b)
+                echo "DB Thux será feito backup!"
+                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$THUX_BACKUP
+                ;;
+            C | c)
+                echo "DB osTicket será feito backup!"
+                #  mysqldump -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" > /mnt/backup/$osT_backup
+                ;;
+        esac
+        ;;
+    05 | 5 )
+        echo "obrigado!"
+        ;;
+    * )
+        echo "nenhuma escolha válida, tente novamente!"
+        ;;
+esac
+# ------------------------------------------------------------------------ #

@@ -1,0 +1,14 @@
+## '/' deve ser usado quando o alias for igual ao comando, quando se quiser executar o comando e não o alias
+
+alias ll='ls -AlF'
+alias la='ls -A'
+alias l='ls -CF'
+alias lla='ll -Al'
+alias thux='ping -c3'
+alias ipr='ip route show'
+alias ipa='ip -c a'
+alias db-do-web='mysql -u thux-adm -p -h 146.190.126.255'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+#alias onde="echo $PWD"
