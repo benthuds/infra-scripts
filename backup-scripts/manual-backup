@@ -20,77 +20,92 @@
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- VARIÁVEIS ----------------------------------------- #
-HTML="$(date +%Y"-"%m"-"%d)_html.bz2.tar"
-SITES="$(date +%Y"-"%m"-"%d)_sites-conf.bz2.tar"
-KEYS="$(date +%Y"-"%m"-"%d)_ssl-keys.bz2.tar"
-CTR_BACKUP="$(date +%Y"-"%m"-"%d)_dbcitrino.sql"
-THUX_BACKUP="$(date +%Y"-"%m"-"%d)_thux_db.sql"
-OST_BACKUP="$(date +%Y"-"%m"-"%d)_osTicket_db.sql"
-BD_USER="user"
-DB_PASSWD="senh@"
-DB_NAME="database"
+#HTML_ARC_NAME="$(date +%Y"-"%m"-"%d)_html.bz2.tar"
+#SITES_ARC_NAME="$(date +%Y"-"%m"-"%d)_sites-conf.bz2.tar"
+#KEYS_ARC_NAME="$(date +%Y"-"%m"-"%d)_ssl-keys.bz2.tar"
+#CTR_DB_ARC_NAME="$(date +%Y"-"%m"-"%d)_dbcitrino.sql"
+#THUX_DB_ARC_NAME="$(date +%Y"-"%m"-"%d)_thux_db.sql"
+#OST_DB_ARC_NAME="$(date +%Y"-"%m"-"%d)_osTicket_db.sql"
+#BD_USER="user"
+#DB_PASSWD="senh@"
+#DB_NAME="database"
+#CON_DB="$(mysqldump -u "$BD_USER" -p"$DB_PASSWD" "$DB_NAME")"
+HTML_CONTENT="/user/share/nginx/html"
+SITE_CONF="/etc/nginx/sites-available/"
+BKP_FOLDER="/mnt/backup/"
+SCRIPT_FOLDER="/etc/thux/scripts"
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- TESTES ----------------------------------------- #
-
+#[ ! -d $SCRIPT_FOLDER ] && [ -z "$(ls -A $SCRIPT_FOLDER)" ] && echo -e "Os scripts de execução não estão na pasta correta: $SCRIPT_FOLDER" && exit 1
+if [ ! -d $BKP_FOLDER ]; then
+    mkdir /mnt/backup
+fi
+#[ ! -d $HTML_CONTENT ] && [ -z "$(ls -A $HTML_CONTENT)" ] && echo -e "Pasta de conteúdo HTML está vazia, pasta verificada: $HTML_CONTENT" && exit 1
+#[ ! -d $SITE_CONTENT ] && [ -z "$(ls -A $SITE_CONTENT)" ] && echo -e "Pasta com as configurações dos sites está vazia, pasta verificada: $SITE_CONTENT" && exit 1
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- FUNÇÕES ----------------------------------------- #
+MenuBackup () {
+    printf "Escolha uma das opções de backup, abaixo: \n
+        01 - Backup dos conteúdos HTML; \n
+        02 - Backup das configurações dos Sites; \n
+        03 - Backup das Chaves SSL; \n
+        04 - Backup dos Banco de Dados dos Sites \n
+        05 - Sair \n"
 
+    read ESCOLHA
+
+    case "$ESCOLHA" in
+        01 | 1)
+            echo "Iniciando o backup do conteúdo HTML!" 
+            $SCRIPT_FOLDER/html-content-bkp
+            ;;
+        02 | 2 )
+            echo "Iniciando o backup das configurações do sites!"
+            $SCRIPT_FOLDER/sites-confs-bkp
+            ;;
+        03 | 3 )
+            echo "Iniciando o backup chaves SSL!"
+            $SCRIPT_FOLDER/ssl-keys-bkp
+            ;;
+        04 | 4 )
+            echo "Escolha qual Databse deseja fazer o Backup:"
+            EscolheDatabase
+            ;;
+        05 | 5 )
+            exit
+            ;;
+        * )
+            echo "Escolha inválida, tente novamente!"
+            ;;
+    esac
+}
+
+EscolheDatabase () {
+    printf "Escolha qual Database deseja executar o Backup: \n
+        A - Site Citrino; \n
+        B - Site Thux; \n
+        C - osTicket. \n"
+    
+    read BANCO
+    case "$BANCO" in
+            A | a)
+            echo "Iniciando o backup do Database do site Citrino!"
+            echo -e "$SCRIPT_FOLDER/citrino-db_bkp"
+            ;;
+        B | b)
+            echo "Iniciando o backup do Database do site Thux!"
+            $SCRIPT_FOLDER/thux-db_bkp
+            ;;
+        C | c)
+            echo "Iniciando o backup do Database do site osTicket!"
+            $SCRIPT_FOLDER/osTicket-db_bkp
+            ;;
+    esac
+}
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
-printf "Escolha uma das opções de backup, abaixo: \n
-    01 - Backup dos conteúdos HTML; \n
-    02 - Backup das configurações dos Sites; \n
-    03 - Backup das Chaves SSL; \n
-    04 - Backup dos Banco de Dados dos Sites \n
-    05 - Sair \n"
-
-read ESCOLHA
-
-case "$ESCOLHA" in
-    01 | 1)
-        echo "backup conteúdo HTML!" 
-        /home/huds_on/Documents/thux/git/infra-scripts/placebo.sh
-        #tar cjfv /mnt/backup/$HTML /usr/share/nginx/html/
-        ;;
-    02 | 2 )
-        echo "backup conf sites!"
-        #tar cjfv /mnt/backup/$SITES /etc/nginx/sites-available/
-        ;;
-    03 | 3 )
-        echo "backup chaves ssl!"
-        #tar cjfv /mnt/backup/$KEYS /etc/ssl
-        ;;
-    04 | 4 )
-        echo "backup databases!"
-        printf "Escolha qual Database deseja executar o Backup: \n
-            A - Site Citrino; \n
-            B - Site Thux; \n
-            C - osTicket. \n"
-        
-        read BANCO
-        case "$BANCO" in
-             A | a)
-                echo "DB Citrino será feito backup!"
-                #$CON_DB > /mnt/backup/$CTR_BACKUP
-                ;;
-            B | b)
-                echo "DB Thux será feito backup!"
-                #$CON_DB > /mnt/backup/$THUX_BACKUP
-                ;;
-            C | c)
-                echo "DB osTicket será feito backup!"
-                #$CON_DB > /mnt/backup/$osT_backup
-                ;;
-        esac
-        ;;
-    05 | 5 )
-        echo "obrigado!"
-        ;;
-    * )
-        echo "nenhuma escolha válida, tente novamente!"
-        ;;
-esac
+MenuBackup
 # ------------------------------------------------------------------------ #
