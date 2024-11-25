@@ -1,4 +1,4 @@
-#!/bin/bash
+@#!/bin/bash
 #
 # backup-webthux.sh - backup dos arquivos de configuração de um servidor Web.
 #
@@ -21,9 +21,9 @@
 
 # ------------------------------- VARIÁVEIS ----------------------------------------- #
 arc_backup="$(date +%Y"-"%m"-"%d)_dbcitrino.sql"
-db_user="root"
-db_passwd="tJ#@9#k3V3$"
-db_name="dbcitrino"
+db_user="user"
+db_passwd="senh@"
+db_name="database"
 # ------------------------------------------------------------------------ #
 
 # ------------------------------- TESTES ----------------------------------------- #
