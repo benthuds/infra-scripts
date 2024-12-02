@@ -86,7 +86,8 @@ EscolheDatabase () {
     printf "Escolha qual Database deseja executar o Backup: \n
         A - Site Citrino; \n
         B - Site Thux; \n
-        C - osTicket. \n"
+        C - osTicket. \n
+        D - Sair \n"
     
     read BANCO
     case "$BANCO" in
@@ -101,6 +102,10 @@ EscolheDatabase () {
         C | c)
             echo "Iniciando o backup do Database do site osTicket!"
             $SCRIPT_FOLDER/osTicket-db_bkp
+            ;;
+        D | d)
+            echo "Obrigado!"
+            exit
             ;;
     esac
 }
