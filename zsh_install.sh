@@ -43,7 +43,7 @@ SH=$(which sh > /dev/null 2>&1;  echo $?)
 
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
 ## instalação do Oh My ZSH
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &
 
 ## instalação do plugin Auto Sugestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -58,15 +58,15 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 sleep 3
 if [ -d ~/.fzf/ ]; 
 then
-    ~/.fzf/install -y 
+    ~/.fzf/install
 elif [ -d ~/.fz/ ]; then
-    ~/.fz/install -y
+    ~/.fz/install
 else
     echo "Diretório não encontrado!"
     exit 1;
 if
 
 ## ajustes na configuração do ZSH
-sed -i "/ZSH_THEME/c/ZSH_THEME="fino-time"/" ~/.zshrc
-sed -i "s/plugins=(git)/$(printf 'plugins=(/ngit n/zsh-syntax-highlighting n/zsh-autosuggestions n/fzf n/)')/" ~/.zshrc
+sed -i 's|ZSH_THEME="robbyrussell"|ZSH_THEME="fino-time"|' ~/.zshrc
+sed -i "s|plugins=(git)|$(printf 'plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf)')|" ~/.zshrc
 # ------------------------------------------------------------------------ #
