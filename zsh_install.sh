@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 #
 # backup-webthux.sh - backup dos arquivos de configuração de um servidor Web.
 #
@@ -43,7 +43,7 @@ SH=$(which sh > /dev/null 2>&1;  echo $?)
 
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
 ## instalação do Oh My ZSH
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 ## instalação do plugin Auto Sugestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -63,8 +63,8 @@ elif [ -d ~/.fz/ ]; then
     ~/.fz/install
 else
     echo "Diretório não encontrado!"
-    exit 1;
-if
+    exit 1
+fi
 
 ## ajustes na configuração do ZSH
 sed -i 's|ZSH_THEME="robbyrussell"|ZSH_THEME="fino-time"|' ~/.zshrc
