@@ -44,6 +44,7 @@ SH=$(which sh > /dev/null 2>&1;  echo $?)
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
 ## instalação do Oh My ZSH
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sleep 5
 
 ## instalação do plugin Auto Sugestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
